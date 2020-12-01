@@ -3,6 +3,7 @@
 -- Description : Utility functions for parsing problems and their inputs.
 module AoC.Parse where
 
+import Control.Exception (throw)
 import Control.Monad (void)
 import Data.Bifunctor (Bifunctor (bimap))
 import Data.Functor (($>))
@@ -17,7 +18,7 @@ inputName ::
   -- | day
   Int ->
   FilePath
-inputName = printf "input/day%02d.txt"
+inputName = printf "inputs/day%02d.txt"
 
 -- | Returns the name of the example inputs for a day and part.
 exampleName ::
@@ -28,10 +29,22 @@ exampleName ::
   FilePath
 exampleName = printf "inputs/day%02d%c.txt"
 
+getInput :: Int -> Parser a -> IO [a]
+getInput i p = do
+  input <- readFile (inputName i)
+  pure $ pLines p input
+
 type Parser = Parsec Void String
 
 number :: Integral a => Parser a
 number = L.signed (return ()) L.decimal
+
+pLines :: Parser a -> String -> [a]
+pLines parser input = case parse (traverse p (lines input)) "" input of
+  Left err -> throw err
+  Right a -> a
+  where
+    p l = setInput l *> parser <* eof <* setInput "\n" <* newline
 
 exampleToNum :: (String, String) -> (Int, Int)
 exampleToNum = bimap read read
