@@ -41,11 +41,14 @@ validA (mi, ma, c, p) = any ((== c) . fst) f && cf >= mi && cf <= ma
 validB :: Line -> Bool
 validB (ith, jth, c, p) = (p !! (ith - 1) == c) /= (p !! (jth - 1) == c)
 
+valid :: (Line -> Bool) -> [Line] -> Int
+valid f input = length $ filter (== True) $ map f input
+
 partA :: [Line] -> Int
-partA input = length $ filter (== True) $ map validA input
+partA = valid validA
 
 partB :: [Line] -> Int
-partB input = length $ filter (== True) $ map validB input
+partB = valid validB
 
 main :: IO ()
 main = do
