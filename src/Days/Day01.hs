@@ -1,7 +1,6 @@
 module Days.Day01 where
 
 import qualified AoC
-import Data.List (elemIndex)
 
 main :: IO ()
 main = do
@@ -10,15 +9,7 @@ main = do
   print (partB input)
 
 partA :: [Int] -> Int
-partA i = case elemIndex 2020 $ map sum g of
-  Just idx -> product $ g !! idx
-  Nothing -> 0
-  where
-    g = [[x, y] | x <- i, y <- i]
+partA i = head [x * y | x <- i, y <- i, x + y == 2020]
 
 partB :: [Int] -> Int
-partB i = case elemIndex 2020 $ map sum g of
-  Just idx -> product $ g !! idx
-  Nothing -> 0
-  where
-    g = [[x, y, z] | x <- i, y <- i, z <- i]
+partB i = head [x * y * z | x <- i, y <- i, z <- i, x + y + z == 2020]
