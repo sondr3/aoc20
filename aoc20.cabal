@@ -19,7 +19,6 @@ source-repository head
 
 common config
   default-language:   Haskell2010  
-  default-extensions: NamedFieldPuns
   ghc-options:
     -Wall -Wcompat -Wincomplete-record-updates
     -Wincomplete-uni-patterns -Wredundant-constraints
