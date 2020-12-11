@@ -34,6 +34,11 @@ getInput i p = do
   input <- readFile (inputName i)
   pure $ pLines p input
 
+getExampleInput :: Int -> Char -> Parser a -> IO [a]
+getExampleInput i c p = do
+  input <- readFile (exampleName i c)
+  pure $ pLines p input
+
 type Parser = Parsec Void String
 
 number :: Integral a => Parser a

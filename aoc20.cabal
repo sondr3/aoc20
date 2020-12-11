@@ -34,7 +34,9 @@ library
   import:          config
   hs-source-dirs:  src
   exposed-modules: AoC
-  other-modules:   AoC.Parse
+  other-modules:
+    AoC.BST
+    AoC.Parse
 
 test-suite aoc20-test
   import:             config
